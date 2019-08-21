@@ -18,9 +18,6 @@ int ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
 	discriminant = a[1] * a[1] - 4 * a[0] * a[2];
 	if (discriminant < 0)
 		return (0);
-	*intersect_point = ft_add(camera_pos,
-		ft_vector_product_number(direction,
-			(ft_dot(camera_sphere_vector, direction) - ft_sqrt(discriminant))));
 	float t1, t2, min_t, max_t;
 
 	t1 = (-a[1] + ft_sqrt(discriminant)) / (2 * a[0]);
@@ -37,6 +34,7 @@ int ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
 		max_t = t1;
 	}
 	t1 = (min_t >= 0 ? min_t : max_t);
+	*intersect_point = ft_add(camera_pos, ft_vector_product_number(direction, min_t));
 	return (t1 > 0);
 }
 
@@ -47,7 +45,7 @@ int 	ft_intersect_plane(const void *data, const t_vector3d camera_pos,
 	t_plane  *plane;
 	t_vector3d camera_plane_vector;
 	t_vector3d camera_n;
-	float denom;
+	float denom, result;
 
 	obj = (t_object *)data;
 	plane = (t_plane *)obj->data;
@@ -58,7 +56,9 @@ int 	ft_intersect_plane(const void *data, const t_vector3d camera_pos,
 	if (denom > 0.00001)
 	{
 		camera_plane_vector = ft_dif(ft_normalize(obj->location), camera_n);
-		return ((ft_dot(camera_plane_vector, plane->n) / denom) >= 0);
+		result = ft_dot(camera_plane_vector, plane->n) / denom;
+		*intersect_point = ft_add(camera_pos, ft_vector_product_number(direction, result));
+		return (result >= 0);
 	}
 	return (0);
 }

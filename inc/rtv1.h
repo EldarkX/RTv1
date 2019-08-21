@@ -36,7 +36,7 @@ typedef struct  s_camera
 typedef struct  s_light
 {
 	t_vector3d 	location;
-	float	 	intensiy;
+	float	 	intensity;
 }			   	t_light;
 
 typedef struct 		s_object
