@@ -1,7 +1,7 @@
 #include "../inc/rtv1.h"
 
 int ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
-	t_vector3d direction, t_vector3d *intersect_point)
+	t_vector3d direction)
 {
 	t_vector3d camera_sphere_vector;
 	t_object *obj;
@@ -34,12 +34,12 @@ int ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
 		max_t = t1;
 	}
 	t1 = (min_t >= 0 ? min_t : max_t);
-	*intersect_point = ft_add(camera_pos, ft_vector_product_number(direction, min_t));
+	obj->intersect_point = ft_add(camera_pos, ft_vector_product_number(direction, min_t));
 	return (t1 > 0);
 }
 
 int 	ft_intersect_plane(const void *data, const t_vector3d camera_pos,
-			t_vector3d direction, t_vector3d *intersect_point)
+			t_vector3d direction)
 {
 	t_object *obj;
 	t_plane  *plane;
@@ -49,22 +49,21 @@ int 	ft_intersect_plane(const void *data, const t_vector3d camera_pos,
 
 	obj = (t_object *)data;
 	plane = (t_plane *)obj->data;
-	camera_n = ft_normalize(camera_pos);
 	direction = ft_normalize(direction);
 
 	denom = ft_dot(plane->n, direction);
-	if (denom > 0.00001)
+	if (denom > 0.000001)
 	{
-		camera_plane_vector = ft_dif(ft_normalize(obj->location), camera_n);
+		camera_plane_vector = ft_dif(obj->location, camera_pos);
 		result = ft_dot(camera_plane_vector, plane->n) / denom;
-		*intersect_point = ft_add(camera_pos, ft_vector_product_number(direction, result));
+		obj->intersect_point = ft_add(camera_pos, ft_vector_product_number(direction, result));
 		return (result >= 0);
 	}
 	return (0);
 }
 
 int 	ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
-			t_vector3d direction, t_vector3d *intersect_point)
+			t_vector3d direction)
 {
 	t_vector3d camera_cylinder_vector;
 	t_object *obj;
@@ -106,7 +105,7 @@ int 	ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
 }
 
 int 	ft_intersect_cone(const void *data, const t_vector3d camera_pos,
-			t_vector3d direction, t_vector3d *intersect_point)
+			t_vector3d direction)
 {
 	t_vector3d camera_cone_vector;
 	t_object *obj;

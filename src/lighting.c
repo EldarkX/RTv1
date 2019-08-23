@@ -1,16 +1,11 @@
 #include "../inc/rtv1.h"
 
-int		ft_ray_to_light(t_rtv1 *rtv1, t_object *obj, t_vector3d intersect_point)
+int		ft_ray_to_light(t_rtv1 *rtv1, t_object *obj)
 {
-	t_vector3d normal;
-	t_vector3d point_to_light = ft_dif(rtv1->light_source->location, intersect_point);
-
-	normal = ft_dif(intersect_point, obj->location);
-	normal = ft_normalize(normal);
+	t_vector3d point_to_light = ft_dif(rtv1->light_source->location, obj->intersect_point);
 
 	float obj_intensity;
-	float x = ft_dot(point_to_light, normal);
-
+	float x = ft_dot(point_to_light, obj->normal);
 	t_color new = obj->color;
 	if (x <= 0)
 	{

@@ -46,10 +46,12 @@ typedef struct 		s_object
 	t_vector3d 		location;
 	t_vector3d 		rotation;
 	t_vector3d 		scale;
+	t_vector3d		intersect_point;
+	t_vector3d		normal;
 	int				(*ft_intersect)(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction, t_vector3d *intersect_point);
+						t_vector3d direction);
 	t_color			(*ft_get_color)(const void *data, const t_vector3d intersect_point);
-	t_vector3d		(*ft_get_normal)(const void *data, const t_vector3d intersect_point);
+	t_vector3d		(*ft_get_normal)(const void *data, t_vector3d dir);
 	void			(*ft_destructor)(void *data);
 	struct s_object *next;
 }              		t_object;
@@ -62,7 +64,7 @@ typedef	struct  	s_sphere
 t_object			*ft_new_sphere(t_vector3d location,float radius,
 						t_color color);
 int 				ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction, t_vector3d *intersect_point);
+						t_vector3d direction);
 
 typedef	struct  	s_cylinder
 {
@@ -73,7 +75,7 @@ typedef	struct  	s_cylinder
 t_object			*ft_new_cylinder(t_vector3d location,float radius, float height,
 						t_color color);
 int 				ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction, t_vector3d *intersect_point);
+						t_vector3d direction);
 
 typedef	struct  	s_cone
 {
@@ -84,7 +86,7 @@ typedef	struct  	s_cone
 t_object			*ft_new_cone(t_vector3d location,float radius, float height,
 						t_color color);
 int 				ft_intersect_cone(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction, t_vector3d *intersect_point);
+						t_vector3d direction);
 
 typedef	struct  	s_plane
 {
@@ -93,7 +95,7 @@ typedef	struct  	s_plane
 
 t_object			*ft_new_plane(t_vector3d location, t_color color);
 int 				ft_intersect_plane(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction, t_vector3d *intersect_point);
+						t_vector3d direction);
 
 typedef struct  	s_rtv1
 {
@@ -125,7 +127,11 @@ void			ft_manage_key_input(t_rtv1 *rtv1);
 int 			ft_ray_tracing_proccess(t_rtv1 *rtv1, t_vector3d dir);
 int 			ft_color_to_int(t_color color);
 
-int				ft_ray_to_light(t_rtv1 *rtv1, t_object *obj,
-					t_vector3d intersect_point);
+int				ft_ray_to_light(t_rtv1 *rtv1, t_object *obj);
+
+t_vector3d 		ft_get_normal_sphere(const void *data, t_vector3d dir);
+t_vector3d		ft_get_normal_cylinder(const void *data, t_vector3d dir);
+t_vector3d 		ft_get_normal_cone(const void *data, t_vector3d dir);
+t_vector3d 		ft_get_normal_plane(const void *data, t_vector3d dir);
 
 #endif

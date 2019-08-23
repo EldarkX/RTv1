@@ -11,6 +11,7 @@ t_object	*ft_new_sphere(t_vector3d location, float radius, t_color color)
 	obj->location = location;
 	obj->color = color;
 	obj->ft_intersect = ft_intersect_sphere;
+	obj->ft_get_normal = ft_get_normal_sphere;
 	obj->next = NULL;
 	return (obj);
 }
@@ -27,6 +28,7 @@ t_object	*ft_new_cylinder(t_vector3d location, float radius, float height, t_col
 	obj->location = location;
 	obj->color = color;
 	obj->ft_intersect = ft_intersect_cylinder;
+	obj->ft_get_normal = ft_get_normal_cylinder;
 	obj->next = NULL;
 	return (obj);
 }
@@ -43,6 +45,7 @@ t_object	*ft_new_cone(t_vector3d location, float radius, float height, t_color c
 	obj->location = location;
 	obj->color = color;
 	obj->ft_intersect = ft_intersect_cone;
+	obj->ft_get_normal = ft_get_normal_cone;
 	obj->next = NULL;
 	return (obj);
 }
@@ -58,6 +61,7 @@ t_object	*ft_new_plane(t_vector3d location, t_color color)
 	obj->location = location;
 	obj->color = color;
 	obj->ft_intersect = ft_intersect_plane;
+	obj->ft_get_normal = ft_get_normal_plane;
 	obj->next = NULL;
 	return (obj);
 }

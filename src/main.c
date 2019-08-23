@@ -52,7 +52,7 @@ int main()
     rtv1 = (t_rtv1 *)malloc(sizeof(t_rtv1));
     ft_initialize_program(rtv1);
     rtv1->objects = NULL;
-    rtv1->environment_light = 0.1; 
+    rtv1->environment_light = 0.2; 
 /* temporary*/
     t_color color;
     /*color.r = 100;
@@ -63,31 +63,31 @@ int main()
     /*color.r = 0;
     color.g = 0;
     color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(ft_new_vector(-7, 2, 2), 0.5, 3, color)); */  
-    /*color.r = 50;
-    color.g = 50;
-    color.b = 80;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, -1, 0), color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(ft_new_vector(-7, 2, 2), 0.5, 3, color));  */
     color.r = 150;
     color.g = 150;
+    color.b = 0;
+    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, -2, 0), color));
+    color.r = 0;
+    color.g = 150;
     color.b = 150;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 0, 1), color));
-    */color.r = 255;
+    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 0, 6), color));
+    color.r = 255;
     color.g = 0;
     color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(0, 0, 3), 2, color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(0, 0, 0), 2, color));
     color.r = 0;
     color.g = 255;
     color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(-3, 0, 4), 2, color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(-4, 0, 2), 2.2, color));
     color.r = 0;
     color.g = 0;
     color.b = 255;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(3, 0, 4), 2, color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(4, 0, 1), 2.2, color));
     rtv1->camera = (t_camera *)malloc(sizeof(t_camera));
     rtv1->camera->location = ft_new_vector(0, 0, -15);
     rtv1->light_source = (t_light *)malloc(sizeof(t_light));
-    rtv1->light_source->location = ft_new_vector(0, 3, 0);
+    rtv1->light_source->location = ft_new_vector(0, 3, -5);
     rtv1->light_source->intensity = 0.8;
     ft_draw_loop(rtv1);
     ft_memory_clean(rtv1);
