@@ -33,13 +33,12 @@ t_object	*ft_new_cylinder(t_vector3d location, float radius, float height, t_col
 	return (obj);
 }
 
-t_object	*ft_new_cone(t_vector3d location, float radius, float height, t_color color)
+t_object	*ft_new_cone(t_vector3d location, float radius, t_color color)
 {
 	t_cone *new_cone = (t_cone *)malloc(sizeof(t_cone)); 
 	t_object *obj = (t_object *)malloc(sizeof(t_object));
 
 	new_cone->radius = radius;
-	new_cone->height = height;
 
 	obj->data = new_cone;
 	obj->location = location;

@@ -20,7 +20,11 @@ t_vector3d ft_get_normal_cylinder(const void *data, t_vector3d dir)
 	obj = (t_object *)data;
 	normal = ft_dif(obj->intersect_point, obj->location);
 	normal = ft_normalize(normal);
-	return (normal);
+	if (((t_cylinder *)obj->data)->height <= 1)
+		return (normal); 
+	if (ft_dot(normal, dir) < 0)
+		return (normal);
+	return (ft_vector_product_number(normal, -1));
 }
 
 /*TMP*/
@@ -32,7 +36,9 @@ t_vector3d ft_get_normal_cone(const void *data, t_vector3d dir)
 	obj = (t_object *)data;
 	normal = ft_dif(obj->intersect_point, obj->location);
 	normal = ft_normalize(normal);
-	return (normal);
+	//if (ft_dot(normal, dir) < 0)
+		return (normal);
+	//return (ft_vector_product_number(normal, -1));
 }
 
 t_vector3d ft_get_normal_plane(const void *data, t_vector3d dir)

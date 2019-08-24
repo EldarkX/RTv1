@@ -52,38 +52,42 @@ int main()
     rtv1 = (t_rtv1 *)malloc(sizeof(t_rtv1));
     ft_initialize_program(rtv1);
     rtv1->objects = NULL;
-    rtv1->environment_light = 0.2; 
+    rtv1->environment_light = 0.1; 
 /* temporary*/
     t_color color;
     /*color.r = 100;
     color.g = 70;
     color.b = 70;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_cone(ft_new_vector(1, 1, 0), 1, 3, color));*/
+    rtv1->objects = ft_add_obj(rtv1, ft_new_cone(ft_new_vector(1, 1, 0), 1, color));*/
 
-    /*color.r = 0;
+    color.r = 255;
     color.g = 0;
-    color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(ft_new_vector(-7, 2, 2), 0.5, 3, color));  */
+    color.b = 255;
+    rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(ft_new_vector(0, -2, 2), 3, 4, color)); 
     color.r = 150;
     color.g = 150;
     color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, -2, 0), color));
-    color.r = 0;
-    color.g = 150;
-    color.b = 150;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 0, 6), color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 7, 0), color));
     color.r = 255;
+    color.g = 30;
+    color.b = 150;
+    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, -3, 0), color));
+    color.r = 0;
+    color.g = 70;
+    color.b = 70;
+    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 0, 6), color));
+    /*color.r = 255;
     color.g = 0;
     color.b = 0;
     rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(0, 0, 0), 2, color));
     color.r = 0;
     color.g = 255;
     color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(-4, 0, 2), 2.2, color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(-4, 0, 2), 2.4, color));
     color.r = 0;
     color.g = 0;
     color.b = 255;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(4, 0, 1), 2.2, color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(4, 0, 1), 2.4, color));*/
     rtv1->camera = (t_camera *)malloc(sizeof(t_camera));
     rtv1->camera->location = ft_new_vector(0, 0, -15);
     rtv1->light_source = (t_light *)malloc(sizeof(t_light));
