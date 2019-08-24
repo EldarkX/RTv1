@@ -8,19 +8,13 @@
 
 # include "vector3d.h"
 
-# define WIDTH 		600
-# define HEIGHT 	600
+# define WIDTH 		800
+# define HEIGHT 	800
 
 # define THREADS	4
 
 # define ABS(x)		(x) > 0 ? (x) : -(x)
 # define DROUND(d)	ABS(d) < 0.001 ? 0 : (d)
-
-/* temporary */
-
-double ft_sqrt(double number);
-
-/***/
 
 typedef struct  s_color
 {
@@ -48,9 +42,9 @@ typedef struct 		s_object
 	t_color    		color;	
 	t_vector3d 		location;
 	t_vector3d 		rotation;
-	//t_vector3d 		scale;
-	t_vector3d		intersect_point;
+	t_vector3d 		direction;
 	t_vector3d		normal;
+	t_vector3d		intersect_point;
 	float 			t;
 	int				(*ft_intersect)(const void *data, const t_vector3d camera_pos,
 						t_vector3d direction);
@@ -74,11 +68,9 @@ t_vector3d 			ft_get_normal_sphere(const void *data, t_vector3d dir);
 typedef	struct  	s_cylinder
 {
 	float       	radius;
-	float			height;
 }					t_cylinder;
 
-t_object			*ft_new_cylinder(t_vector3d location, t_vector3d rotation, float radius, float height,
-						t_color color);
+t_object			*ft_new_cylinder(t_vector3d location, t_vector3d rotation, float radius, t_color color);
 int 				ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
 						t_vector3d direction);
 t_vector3d			ft_get_normal_cylinder(const void *data, t_vector3d dir);
@@ -133,6 +125,7 @@ void			ft_manage_key_input(t_rtv1 *rtv1);
 int 			ft_ray_tracing_proccess(t_rtv1 *rtv1, t_vector3d dir);
 int 			ft_color_to_int(t_color color);
 float			ft_get_min_t(float a, float b, float c);
+void			ft_change_objects_directions(t_object *objs);
 
 int				ft_ray_to_light(t_rtv1 *rtv1, t_object *obj);
 

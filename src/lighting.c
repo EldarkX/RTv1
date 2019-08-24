@@ -2,10 +2,12 @@
 
 int		ft_ray_to_light(t_rtv1 *rtv1, t_object *obj)
 {
-	t_vector3d point_to_light = ft_dif(rtv1->light_source->location, obj->intersect_point);
+	t_vector3d 	point_to_light;
+	float 		obj_intensity;
+	float 		x;
 
-	float obj_intensity;
-	float x = ft_dot(point_to_light, obj->normal);
+	point_to_light = ft_dif(rtv1->light_source->location, obj->intersect_point);
+	x = ft_dot(point_to_light, obj->normal);
 	t_color new = obj->color;
 	if (x <= 0)
 	{

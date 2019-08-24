@@ -37,7 +37,7 @@ float ft_dot(t_vector3d v1, t_vector3d v2)
 
 float ft_length(t_vector3d v)
 {
-	return (ft_sqrt(ft_dot(v, v)));
+	return (sqrt(ft_dot(v, v)));
 }
 
 t_vector3d ft_normalize(t_vector3d v)
@@ -68,4 +68,42 @@ t_vector3d		ft_vector_product_number(t_vector3d v, float number)
 void			ft_print_vector(t_vector3d v, char *name)
 {
 	printf("%s(%f,%f,%f)\n", name, v.x, v.y, v.z);
+}
+
+t_vector3d		ft_rot_xyz(t_vector3d v, t_vector3d r)
+{
+	v = ft_rot_x(v, DTR(r.x));
+	v = ft_rot_y(v, DTR(r.y));
+	v = ft_rot_z(v, DTR(r.z));
+	return (v);
+}
+
+t_vector3d	ft_rot_x(t_vector3d v, double a)
+{
+	t_vector3d	r;
+
+	r.x = v.x;
+	r.y = v.y * cos(a) - v.z * sin(a);
+	r.z = v.y * sin(a) + v.z * cos(a);
+	return (r);
+}
+
+t_vector3d	ft_rot_y(t_vector3d v, double a)
+{
+	t_vector3d	r;
+
+	r.x = v.x * cos(a) + v.z * sin(a);
+	r.y = v.y;
+	r.z = v.z * cos(a) - v.x * sin(a);
+	return (r);
+}
+
+t_vector3d	ft_rot_z(t_vector3d v, double a)
+{
+	t_vector3d	r;
+
+	r.x = v.x * cos(a) - v.y * sin(a);
+	r.y = v.x * sin(a) + v.y * cos(a);
+	r.z = v.z;
+	return (r);
 }

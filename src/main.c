@@ -15,24 +15,6 @@ t_object    *ft_add_obj(t_rtv1 *rtv1, t_object *new_obj)
     return (head);
 }
 
-double ft_sqrt(double number)
-{
-    double t;
-    int iter = 0;
-    if (number <= 1)
-        return (number);
-    double squareRoot = number / 2;
-    do
-    {
-        if (iter++ > 200)
-            break ;
-        t = squareRoot;
-        squareRoot = (t + (number / t)) / 2;
-
-    } while ((t - squareRoot) != 0);
-    return squareRoot;
-}
-
 void ft_print_objects(t_object *start)
 {
     t_object *tmp = start;
@@ -63,31 +45,31 @@ int main()
     color.r = 255;
     color.g = 0;
     color.b = 255;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(ft_new_vector(0, -2, 2), 3, 4, color)); 
+    rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(ft_new_vector(0, 3, 4), ft_new_vector(0, 0, 0), 3, color)); 
     color.r = 150;
     color.g = 150;
     color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 7, 0), color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 7, 0), ft_new_vector(0, 0, 0), color));
     color.r = 255;
     color.g = 30;
     color.b = 150;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, -3, 0), color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, -3, 0), ft_new_vector(0, 0, 0), color));
     color.r = 0;
     color.g = 70;
     color.b = 70;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 0, 6), color));
-    /*color.r = 255;
+    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 0, 6), ft_new_vector(0, 0, 0), color));
+    color.r = 255;
     color.g = 0;
     color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(0, 0, 0), 2, color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(0, -1, -2), ft_new_vector(0, 0, 0), 2, color));
     color.r = 0;
     color.g = 255;
     color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(-4, 0, 2), 2.4, color));
+    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(-3, -1, 0), ft_new_vector(0, 0, 0), 2, color));
     color.r = 0;
     color.g = 0;
     color.b = 255;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(4, 0, 1), 2.4, color));*/
+    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(3, -1, 0), ft_new_vector(0, 0, 0), 2, color));
     rtv1->camera = (t_camera *)malloc(sizeof(t_camera));
     rtv1->camera->location = ft_new_vector(0, 0, -15);
     rtv1->light_source = (t_light *)malloc(sizeof(t_light));

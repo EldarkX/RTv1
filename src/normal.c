@@ -19,9 +19,7 @@ t_vector3d ft_get_normal_cylinder(const void *data, t_vector3d dir)
 
 	obj = (t_object *)data;
 	normal = ft_dif(obj->intersect_point, obj->location);
-	normal = ft_normalize(normal);
-	if (((t_cylinder *)obj->data)->height <= 1)
-		return (normal); 
+	normal = ft_normalize(ft_rot_xyz(normal, obj->rotation));
 	if (ft_dot(normal, dir) < 0)
 		return (normal);
 	return (ft_vector_product_number(normal, -1));

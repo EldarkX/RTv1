@@ -1,8 +1,8 @@
 SRC = src/main.c src/vector3d.c src/constructors.c src/draw.c src/controller.c src/intersects.c src/ray_tracing_proccess.c \
-		src/lighting.c src/get_normals.c
+		src/lighting.c src/normal.c
 OBJ = src/main.o src/vector3d.o src/constructors.o src/draw.o src/controller.o src/intersects.o src/ray_tracing_proccess.o \
-	src/lighting.o src/get_normals.o
-LIB = `sdl2-config --libs` -L/usr/lib -lSDL2_image
+	src/lighting.o src/normal.o
+LIB = `sdl2-config --libs` -L/usr/lib -lSDL2_image -lm
 
 NAME = rtv1
 

@@ -6,6 +6,7 @@ void	ft_draw_loop(t_rtv1 *rtv1)
 	int i;
 
 	i = -1;
+	ft_change_objects_directions(rtv1->objects);
 	while (++i < THREADS)
 		pthread_create(&threads[i], NULL, ft_draw_calculation, (void *)rtv1);
 	while (1)
@@ -42,7 +43,7 @@ void	*ft_draw_calculation(void *data)
 		x = start_x - 1;
 		while (++x < end_x)
 		{
-			dir = ft_canvas_to_viewport(x, y);
+			dir = ft_normalize(ft_canvas_to_viewport(x, y));
 			ft_put_pixel_to_surface(rtv1, x, y, ft_ray_tracing_proccess(rtv1, dir));
 		}
 	}

@@ -10,6 +10,7 @@ t_object	*ft_new_sphere(t_vector3d location, t_vector3d rotation, float radius, 
 	obj->data = new_sphere;
 	obj->location = location;
 	obj->rotation = rotation;
+	obj->direction = ft_new_vector(0, 1, 0);
 	obj->color = color;
 	obj->ft_intersect = ft_intersect_sphere;
 	obj->ft_get_normal = ft_get_normal_sphere;
@@ -17,17 +18,17 @@ t_object	*ft_new_sphere(t_vector3d location, t_vector3d rotation, float radius, 
 	return (obj);
 }
 
-t_object	*ft_new_cylinder(t_vector3d location, float radius, float height, t_color color)
+t_object	*ft_new_cylinder(t_vector3d location, t_vector3d rotation, float radius, t_color color)
 {
 	t_cylinder *new_cylinder = (t_cylinder *)malloc(sizeof(t_cylinder)); 
 	t_object *obj = (t_object *)malloc(sizeof(t_object));
 
 	new_cylinder->radius = radius;
-	new_cylinder->height = height;
 
 	obj->data = new_cylinder;
 	obj->location = location;
 	obj->rotation = rotation;
+	obj->direction = ft_new_vector(0, 1, 0);
 	obj->color = color;
 	obj->ft_intersect = ft_intersect_cylinder;
 	obj->ft_get_normal = ft_get_normal_cylinder;
@@ -35,7 +36,7 @@ t_object	*ft_new_cylinder(t_vector3d location, float radius, float height, t_col
 	return (obj);
 }
 
-t_object	*ft_new_cone(t_vector3d location, float radius, t_color color)
+t_object	*ft_new_cone(t_vector3d location, t_vector3d rotation, float radius, t_color color)
 {
 	t_cone *new_cone = (t_cone *)malloc(sizeof(t_cone)); 
 	t_object *obj = (t_object *)malloc(sizeof(t_object));
@@ -45,6 +46,7 @@ t_object	*ft_new_cone(t_vector3d location, float radius, t_color color)
 	obj->data = new_cone;
 	obj->location = location;
 	obj->rotation = rotation;
+	obj->direction = ft_new_vector(0, 1, 0);
 	obj->color = color;
 	obj->ft_intersect = ft_intersect_cone;
 	obj->ft_get_normal = ft_get_normal_cone;
@@ -52,16 +54,18 @@ t_object	*ft_new_cone(t_vector3d location, float radius, t_color color)
 	return (obj);
 }
 
-t_object	*ft_new_plane(t_vector3d location, t_color color)
+t_object	*ft_new_plane(t_vector3d location, t_vector3d rotation, t_color color)
 {
 	t_plane *new_plane = (t_plane *)malloc(sizeof(t_plane)); 
 	t_object *obj = (t_object *)malloc(sizeof(t_object));
 
 	new_plane->n = ft_normalize(location);
+	new_plane->n = ft_rot_xyz(new_plane->n, rotation);
 
 	obj->data = new_plane;
 	obj->location = location;
 	obj->rotation = rotation;
+	obj->direction = ft_new_vector(0, 1, 0);
 	obj->color = color;
 	obj->ft_intersect = ft_intersect_plane;
 	obj->ft_get_normal = ft_get_normal_plane;
