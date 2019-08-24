@@ -1,19 +1,17 @@
 #include "../inc/rtv1.h"
 
 int ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
-	t_vector3d direction)
+			t_vector3d direction, const t_vector3d vec_camera_to_obj)
 {
-	t_vector3d camera_sphere_vector;
 	t_object *obj;
 	t_sphere *sphere;
 	double a[2];
 
 	obj = (t_object *)data;
 	sphere = (t_sphere *)obj->data;
-	camera_sphere_vector = ft_dif(camera_pos, obj->location);
 	a[0] = ft_dot(direction, direction);
-	a[1] = 2 * ft_dot(camera_sphere_vector, direction);
-	a[2] = ft_dot(camera_sphere_vector, camera_sphere_vector) - sphere->radius * sphere->radius;
+	a[1] = 2 * ft_dot(vec_camera_to_obj, direction);
+	a[2] = ft_dot(vec_camera_to_obj, vec_camera_to_obj) - sphere->radius * sphere->radius;
 	obj->t = ft_get_min_t(a[0], a[1], a[2]);
 	if (obj->t == -1)
 		return (0);
@@ -22,7 +20,7 @@ int ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
 }
 
 int 	ft_intersect_plane(const void *data, const t_vector3d camera_pos,
-			t_vector3d direction)
+			t_vector3d direction, const t_vector3d vec_camera_to_obj)
 {
 	t_object *obj;
 	t_plane  *plane;
@@ -46,20 +44,24 @@ int 	ft_intersect_plane(const void *data, const t_vector3d camera_pos,
 }
 
 int 	ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
-			t_vector3d direction)
+			t_vector3d direction, const t_vector3d vec_camera_to_obj)
 {
-	t_vector3d camera_cylinder_vector;
 	t_object *obj;
 	t_cylinder *cylinder;
 	double a[2];
+	float dot_dirs;
+	float dot_cam_dirs;
 
 	obj = (t_object *)data;
 	cylinder = (t_cylinder *)obj->data;
-	camera_cylinder_vector = ft_dif(camera_pos, obj->location);
-	a[0] = direction.x * direction.x + direction.z * direction.z;
-	a[1] = 2 * (camera_cylinder_vector.x * direction.x + camera_cylinder_vector.z * direction.z);
-	a[2] = camera_cylinder_vector.x * camera_cylinder_vector.x + camera_cylinder_vector.z * camera_cylinder_vector.z - 
-		cylinder->radius * cylinder->radius;
+	if (ft_length(vec_camera_to_obj) <= cylinder->radius)
+		return (0);
+	dot_dirs = ft_dot(direction, obj->direction);
+	dot_cam_dirs = ft_dot(vec_camera_to_obj, obj->direction);
+	a[0] = ft_dot(direction, direction) - dot_dirs * dot_dirs;
+	a[1] = 2 * ft_dot(direction, vec_camera_to_obj) - dot_dirs * dot_cam_dirs;
+	a[2] = ft_dot(vec_camera_to_obj, vec_camera_to_obj) -
+			dot_cam_dirs * dot_cam_dirs -  cylinder->radius * cylinder->radius;
 	obj->t = ft_get_min_t(a[0], a[1], a[2]);
 	if (obj->t == -1)
 		return (0);
@@ -68,7 +70,7 @@ int 	ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
 }
 
 int 	ft_intersect_cone(const void *data, const t_vector3d camera_pos,
-			t_vector3d direction)
+			t_vector3d direction, const t_vector3d vec_camera_to_obj)
 {
 	t_vector3d camera_cone_vector;
 	t_object *obj;

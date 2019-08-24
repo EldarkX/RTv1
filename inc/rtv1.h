@@ -47,7 +47,7 @@ typedef struct 		s_object
 	t_vector3d		intersect_point;
 	float 			t;
 	int				(*ft_intersect)(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction);
+						t_vector3d direction, const t_vector3d vec_camera_to_obj);
 	t_color			(*ft_get_color)(const void *data, const t_vector3d intersect_point);
 	t_vector3d		(*ft_get_normal)(const void *data, t_vector3d dir);
 	void			(*ft_destructor)(void *data);
@@ -62,7 +62,7 @@ typedef	struct  	s_sphere
 t_object			*ft_new_sphere(t_vector3d location, t_vector3d rotation, float radius,
 						t_color color);
 int 				ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction);
+						t_vector3d direction, const t_vector3d vec_camera_to_obj);
 t_vector3d 			ft_get_normal_sphere(const void *data, t_vector3d dir);
 
 typedef	struct  	s_cylinder
@@ -72,7 +72,7 @@ typedef	struct  	s_cylinder
 
 t_object			*ft_new_cylinder(t_vector3d location, t_vector3d rotation, float radius, t_color color);
 int 				ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction);
+						t_vector3d direction, const t_vector3d vec_camera_to_obj);
 t_vector3d			ft_get_normal_cylinder(const void *data, t_vector3d dir);
 
 typedef	struct  	s_cone
@@ -82,7 +82,7 @@ typedef	struct  	s_cone
 
 t_object			*ft_new_cone(t_vector3d location, t_vector3d rotation, float radius, t_color color);
 int 				ft_intersect_cone(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction);
+						t_vector3d direction, const t_vector3d vec_camera_to_obj);
 t_vector3d 			ft_get_normal_cone(const void *data, t_vector3d dir);
 
 typedef	struct  	s_plane
@@ -92,7 +92,7 @@ typedef	struct  	s_plane
 
 t_object			*ft_new_plane(t_vector3d location, t_vector3d rotation, t_color color);
 int 				ft_intersect_plane(const void *data, const t_vector3d camera_pos,
-						t_vector3d direction);
+						t_vector3d direction, const t_vector3d vec_camera_to_obj);
 t_vector3d 			ft_get_normal_plane(const void *data, t_vector3d dir);
 
 typedef struct  	s_rtv1

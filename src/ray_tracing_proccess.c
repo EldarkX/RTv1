@@ -14,9 +14,10 @@ int 	ft_ray_tracing_proccess(t_rtv1 *rtv1, t_vector3d dir)
 
 	while (objs != NULL)
 	{
-		if (objs->ft_intersect(objs, rtv1->camera->location, ft_normalize(ft_rot_xyz(dir, objs->rotation))))
+		if (objs->ft_intersect(objs, rtv1->camera->location,
+			dir, ft_dif(rtv1->camera->location, objs->location)))
 		{
-			objs->normal = objs->ft_get_normal(objs, ft_normalize(ft_rot_xyz(dir, objs->rotation)));
+			objs->normal = objs->ft_get_normal(objs, dir);
 			if (!nearest_obj)
 			{
 				min_distance = objs->t;
@@ -45,13 +46,11 @@ float	ft_get_min_t(float a, float b, float c)
 	discriminant = DROUND(discriminant);
 	if (discriminant < 0)
 		return (-1);
-
 	t1 = (-b + sqrt(discriminant)) / (2 * a);
 	t2 = (-b - sqrt(discriminant)) / (2 * a);
-
-	if ((t1 <= t2 && t1 >= 0) || (t1 >= 0 && t2 < 0))
+	if ((t1 <= t2 && t1 > 1) || (t1 > 1 && t2 <= 1))
 		return (t1);
-	if ((t2 <= t1 && t2 >= 0) || (t2 >= 0 && t1 < 0))
+	if ((t2 <= t2 && t2 > 1) || (t2 > 1 && t1 <= 1))
 		return (t2);
 	return (-1);
 }

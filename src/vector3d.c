@@ -83,8 +83,8 @@ t_vector3d	ft_rot_x(t_vector3d v, double a)
 	t_vector3d	r;
 
 	r.x = v.x;
-	r.y = v.y * cos(a) - v.z * sin(a);
-	r.z = v.y * sin(a) + v.z * cos(a);
+	r.y = v.y * cos(a) + v.z * sin(a);
+	r.z = -(v.y * sin(a)) + v.z * cos(a);
 	return (r);
 }
 
@@ -92,9 +92,9 @@ t_vector3d	ft_rot_y(t_vector3d v, double a)
 {
 	t_vector3d	r;
 
-	r.x = v.x * cos(a) + v.z * sin(a);
+	r.x = v.x * cos(a) - v.z * sin(a);
 	r.y = v.y;
-	r.z = v.z * cos(a) - v.x * sin(a);
+	r.z = v.z * cos(a) + v.x * sin(a);
 	return (r);
 }
 
