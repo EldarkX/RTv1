@@ -48,7 +48,7 @@ typedef struct 		s_object
 	t_color    		color;	
 	t_vector3d 		location;
 	t_vector3d 		rotation;
-	t_vector3d 		scale;
+	//t_vector3d 		scale;
 	t_vector3d		intersect_point;
 	t_vector3d		normal;
 	float 			t;
@@ -65,7 +65,7 @@ typedef	struct  	s_sphere
 	float       	radius;
 }					t_sphere;
 
-t_object			*ft_new_sphere(t_vector3d location,float radius,
+t_object			*ft_new_sphere(t_vector3d location, t_vector3d rotation, float radius,
 						t_color color);
 int 				ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
 						t_vector3d direction);
@@ -77,7 +77,7 @@ typedef	struct  	s_cylinder
 	float			height;
 }					t_cylinder;
 
-t_object			*ft_new_cylinder(t_vector3d location,float radius, float height,
+t_object			*ft_new_cylinder(t_vector3d location, t_vector3d rotation, float radius, float height,
 						t_color color);
 int 				ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
 						t_vector3d direction);
@@ -88,7 +88,7 @@ typedef	struct  	s_cone
 	float       	radius;
 }					t_cone;
 
-t_object			*ft_new_cone(t_vector3d location,float radius, t_color color);
+t_object			*ft_new_cone(t_vector3d location, t_vector3d rotation, float radius, t_color color);
 int 				ft_intersect_cone(const void *data, const t_vector3d camera_pos,
 						t_vector3d direction);
 t_vector3d 			ft_get_normal_cone(const void *data, t_vector3d dir);
@@ -98,7 +98,7 @@ typedef	struct  	s_plane
 	t_vector3d     	n;
 }					t_plane;
 
-t_object			*ft_new_plane(t_vector3d location, t_color color);
+t_object			*ft_new_plane(t_vector3d location, t_vector3d rotation, t_color color);
 int 				ft_intersect_plane(const void *data, const t_vector3d camera_pos,
 						t_vector3d direction);
 t_vector3d 			ft_get_normal_plane(const void *data, t_vector3d dir);

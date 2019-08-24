@@ -57,7 +57,8 @@ int 	ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
 
 	obj = (t_object *)data;
 	cylinder = (t_cylinder *)obj->data;
-	camera_cylinder_vector = ft_dif(camera_pos, obj->location);
+	camera_cylinder_vector = 
+	ft_dif(camera_pos, obj->location);
 	a[0] = direction.x * direction.x + direction.z * direction.z;
 	a[1] = 2 * (camera_cylinder_vector.x * direction.x + camera_cylinder_vector.z * direction.z);
 	a[2] = camera_cylinder_vector.x * camera_cylinder_vector.x + camera_cylinder_vector.z * camera_cylinder_vector.z - 
