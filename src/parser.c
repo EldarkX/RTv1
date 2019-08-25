@@ -2,5 +2,5 @@
 
 void	ft_parse(int fd, t_rtv1 *rtv1)
 {
-	
+	return ;
 }

@@ -25,31 +25,31 @@ OBJ = ft_printf.o  ft_atoi.o  ft_bzero.o  ft_isalnum.o  ft_isalpha.o  ft_isascii
 
 
 RTV1_SRC = src/main.c src/vector3d.c src/constructors_objects.c src/draw.c src/controller.c src/intersects.c \
-	src/ray_tracing_proccess.c src/lighting.c src/normal.c
-RTV1_OBJ = src/main.o src/vector3d.o src/constructors_objects.o src/draw.o src/controller.o src/intersects.o \
-	src/ray_tracing_proccess.o src/lighting.o src/normal.o
+	src/ray_tracing_proccess.c src/lighting.c src/normal.c src/parser.c
+RTV1_OBJ = main.o vector3d.o constructors_objects.o draw.o controller.o intersects.o \
+	ray_tracing_proccess.o lighting.o normal.o parser.o
 
-LIBFT_INC = -I libft/includes/libft.h
-RTV1_INC = -I inc/rtv1.h
+LIBFT_INC = -I libft/includes/
+RTV1_INC = -I inc/
 
 NAME = rtv1
 LIBFT_NAME = libftprintf.a
 
-FRAMEWORK = `sdl2-config --libs` -L/usr/lib -lSDL2_image -lm
+FRAMEWORK = `sdl2-config --libs` -L/usr/lib -lSDL2_image -lm -pthread
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(RTV1_OBJ)
 	@ar rc $(LIBFT_NAME) $(OBJ)
 	@ranlib $(LIBFT_NAME)
-	@gcc $(FLAGS) -o $(NAME) $(LIBFT_NAME) $(FRAMEWORK) $(RTV1_OBJ)
+	@gcc $(FLAGS) $(RTV1_OBJ) $(LIBFT_NAME) $(FRAMEWORK) -o $(NAME)
 
 $(OBJ): $(SRC)
 	@gcc $(FLAGS) -c $(SRC) $(LIBFT_INC)
 
-$(RTV1_OBJ): $(SRC) $(RTV1_SRC)
+$(RTV1_OBJ): $(RTV1_SRC)
 	@gcc $(FLAGS) -c $(RTV1_SRC) $(RTV1_INC)
 
 clean:

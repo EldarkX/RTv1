@@ -15,7 +15,7 @@ t_object    *ft_add_obj(t_rtv1 *rtv1, t_object *new_obj)
     return (head);
 }
 
-t_object    *ft_add_light_source(t_rtv1 *rtv1, t_light *new_light)
+t_light    *ft_add_light_source(t_rtv1 *rtv1, t_light *new_light)
 {
     t_light *head;
 
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
     rtv1 = ft_initialize_program();
     rtv1->objects = NULL;
     rtv1->light_sources = NULL;
-    ft_parse(rtv1); 
+    ft_parse(fd, rtv1); 
 /* temporary*/
     /*t_color color;
     color.rgb = 100;
