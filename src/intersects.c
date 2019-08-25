@@ -22,10 +22,12 @@ int ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
 int 	ft_intersect_plane(const void *data, const t_vector3d camera_pos,
 			t_vector3d direction, const t_vector3d vec_camera_to_obj)
 {
-	t_object *obj;
-	double dot_dirs;
+	t_object	*obj;
+	t_plane		*plane;
+	double		dot_dirs;
 
 	obj = (t_object *)data;
+	plane = (t_plane *)plane;
 	dot_dirs = ft_dot(direction, obj->direction);
 	if (dot_dirs == 0)
 		return (0);
@@ -33,6 +35,7 @@ int 	ft_intersect_plane(const void *data, const t_vector3d camera_pos,
 		obj->t = -ft_dot(vec_camera_to_obj, obj->direction) / dot_dirs;
 	if (obj->t <= 1)
 		return (0);
+	plane->ray_direction = direction;
 	obj->intersect_point = ft_add(camera_pos, ft_vector_product_number(direction, obj->t));
 	return (1);
 }

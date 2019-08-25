@@ -1,0 +1,36 @@
+
+FRACTOL_SRC = src/fractol.c src/controller.c src/draw_loop.c src/draw_proccess.c
+FRACTOL_OBJ = src/fractol.o src/controller.o src/draw_loop.o src/draw_proccess.o
+
+LIBFT_INC = -I libft/includes/
+FRACTOL_INC = -I inc/fractol.h
+
+LIBFT_NAME = libftprintf.a
+NAME = fractol
+
+FRAMEWORK = -lmlx -framework OpenGl -framework Appkit
+
+FLAGS = -Wall -Wextra -Werror
+
+all: $(NAME)
+
+$(NAME): $(OBJ) $(FRACTOL_OBJ)
+	@ar rc $(L_NAME) $(OBJ)
+	@ranlib $(L_NAME)
+	@gcc $(FLAGS) -o $(NAME) $(L_NAME) $(FRAMEWORK) $(FRACTOL_OBJ)
+
+$(OBJ): $(SRC)
+	@gcc $(FLAGS) -c $(SRC) $(LIBFT_INC)
+
+$(FDF_OBJ): $(SRC) $(FRACTOL_SRC)
+	@gcc $(FLAGS) -c $(FRACTOL_SRC) $(FRACTOL_INC)
+
+clean:
+	@rm -f $(OBJ)
+	@rm -f $(FRACTOL_OBJ)
+
+fclean: clean
+	@rm -f $(NAME)
+	@rm -f $(L_NAME)
+
+re: fclean all
