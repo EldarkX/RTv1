@@ -17,23 +17,22 @@ int 	ft_ray_tracing_proccess(t_rtv1 *rtv1, t_vector3d dir)
 		if (objs->ft_intersect(objs, rtv1->camera->location,
 			dir, ft_dif(rtv1->camera->location, objs->location)))
 		{
-			objs->normal = objs->ft_get_normal(objs, dir);
 			if (!nearest_obj)
-			{
-				min_distance = objs->t;
 				nearest_obj = objs;	
-			}
 			else if (objs->t < min_distance)
-			{
-				min_distance = objs->t;;
 				nearest_obj = objs;
-			}
+			min_distance = nearest_obj->t;
 		}
 		objs = objs->next;
 	}
 	if (nearest_obj)
-		return (ft_ray_to_light(rtv1, nearest_obj));
-	return (2147483647);
+	{
+		nearest_obj->normal_dir = ft_dot(dir, nearest_obj->direction) *
+			nearest_obj->t + ft_dot(ft_dif(rtv1->camera->location,
+			nearest_obj->location),	nearest_obj->direction);
+		nearest_obj->normal = nearest_obj->ft_get_normal(nearest_obj, dir);
+	}
+	return (nearest_obj ? ft_ray_to_light(rtv1, nearest_obj) : 2147483647);
 }
 
 float	ft_get_min_t(float a, float b, float c)

@@ -45,6 +45,7 @@ typedef struct 		s_object
 	t_vector3d 		direction;
 	t_vector3d		normal;
 	t_vector3d		intersect_point;
+	float			normal_dir;
 	float 			t;
 	int				(*ft_intersect)(const void *data, const t_vector3d camera_pos,
 						t_vector3d direction, const t_vector3d vec_camera_to_obj);
@@ -77,10 +78,11 @@ t_vector3d			ft_get_normal_cylinder(const void *data, t_vector3d dir);
 
 typedef	struct  	s_cone
 {
-	float       	radius;
+	float       	angle_degree;
+	float			angle_rad;
 }					t_cone;
 
-t_object			*ft_new_cone(t_vector3d location, t_vector3d rotation, float radius, t_color color);
+t_object			*ft_new_cone(t_vector3d location, t_vector3d rotation, float angle_degree, t_color color);
 int 				ft_intersect_cone(const void *data, const t_vector3d camera_pos,
 						t_vector3d direction, const t_vector3d vec_camera_to_obj);
 t_vector3d 			ft_get_normal_cone(const void *data, t_vector3d dir);
