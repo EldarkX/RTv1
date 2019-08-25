@@ -6,6 +6,6 @@ void	ft_parse(int fd, t_rtv1 *rtv1)
 
 	while (get_next_line(fd, &line) > 0)
 	{
-		ft_printf("%s\n", line);
+		ft_printf("%s\n", line); 
 	}
 }
