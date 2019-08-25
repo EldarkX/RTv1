@@ -7,8 +7,7 @@ t_object    *ft_add_obj(t_rtv1 *rtv1, t_object *new_obj)
 
     head = rtv1->objects;
     if (head == NULL)
-        return (new_obj);
-    
+        return (new_obj);   
     while (rtv1->objects->next != NULL)
         rtv1->objects = rtv1->objects->next;
     rtv1->objects->next = new_obj;
@@ -21,8 +20,7 @@ t_light    *ft_add_light_source(t_rtv1 *rtv1, t_light *new_light)
 
     head = rtv1->light_sources;
     if (head == NULL)
-        return (new_light);
-    
+        return (new_light);   
     while (rtv1->light_sources->next != NULL)
         rtv1->light_sources = rtv1->light_sources->next;
     rtv1->light_sources->next = new_light;
@@ -54,7 +52,9 @@ int main(int argc, char **argv)
     rtv1 = ft_initialize_program();
     rtv1->objects = NULL;
     rtv1->light_sources = NULL;
-    ft_parse(fd, rtv1); 
+    rtv1->camera = NULL;
+    ft_parse(fd, rtv1);
+    close(fd);
 /* temporary*/
     /*t_color color;
     color.rgb = 100;
@@ -93,11 +93,10 @@ int main(int argc, char **argv)
     color.g = 0;
     color.b = 255;
     rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(3, -1, 0), ft_new_vector(0, 0, 0), 2, color));*/
-    rtv1->camera = (t_camera *)malloc(sizeof(t_camera));
-    rtv1->camera->location = ft_new_vector(0, 0, -20);
     rtv1->light_sources = (t_light *)malloc(sizeof(t_light));
     rtv1->light_sources->location = ft_new_vector(0, 3, -5);
     rtv1->light_sources->intensity = 0.9;
+    rtv1->light_sources->next = NULL;
     ft_draw_loop(rtv1);
     ft_memory_clean(rtv1);
     return (0);
@@ -117,31 +116,53 @@ t_rtv1    *ft_initialize_program()
             HEIGHT,
             0);
         if(!rtv1->window)
-            ft_exit(rtv1, 1, "Could not create window.\n");
+            ft_exit(rtv1, 1, "Could not create window.");
         rtv1->renderer = SDL_CreateRenderer(rtv1->window, -1, SDL_RENDERER_SOFTWARE);
         if(!rtv1->renderer)
-            ft_exit(rtv1, 1, "Could not create renderer.\n");
+            ft_exit(rtv1, 1, "Could not create renderer.");
         rtv1->surface = SDL_CreateRGBSurface(0, WIDTH, HEIGHT, 32, 0, 0, 0, 0);
         if (!rtv1->surface)
-            ft_exit(rtv1, 1, "Could not create surface.\n");
+            ft_exit(rtv1, 1, "Could not create surface.");
     }
     else
-        ft_exit(rtv1, 1, "Could not init SDL.\n");
+        ft_exit(rtv1, 1, "Could not init SDL.");
     return (rtv1);
 }
 
 void    ft_exit(t_rtv1 *rtv1, int is_with_error, char *message)
 {
     if (is_with_error)
-        printf("Error: %s", message);
+        printf("Error: %s\n", message);
     ft_memory_clean(rtv1);           
     exit(1); 
 }
 
 void    ft_memory_clean(t_rtv1 *rtv1)
 {
-    SDL_DestroyWindow(rtv1->window);
+    t_object    *objs;
+    t_light     *lights;
+    void        *tmp;
+
     if (rtv1)
+    {
+        SDL_DestroyWindow(rtv1->window);
+        objs = rtv1->objects;
+        while (objs)
+        {
+            tmp = objs;
+            objs = objs->next;
+            free(tmp);
+        }
+        lights = rtv1->light_sources;
+        while (lights)
+        {
+            tmp = lights;
+            lights = lights->next;
+            free(tmp);
+        }
+        if (rtv1->camera)
+            free(rtv1->camera);
         free(rtv1);
+    }
     SDL_Quit();
 }

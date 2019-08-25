@@ -1,0 +1,5 @@
+camera:
+{
+	location: 0, 0, -15
+	rotation: 0, 0, 0
+}

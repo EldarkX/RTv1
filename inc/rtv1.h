@@ -21,7 +21,6 @@
 typedef struct  	s_color
 {
 	t_vector3d		rgb;
-	int				alpha;
 }			   		t_color;
 
 typedef struct  	s_camera
@@ -123,6 +122,7 @@ void				ft_exit(t_rtv1 *rtv1, int is_with_error,
 						char *message);
 
 void				ft_parse(int fd, t_rtv1 *rtv1);
+void				ft_parse_camera_data(int fd, t_rtv1 *rtv1);
 
 void				ft_draw_loop(t_rtv1 *rtv1);
 void				*ft_draw_calculation(void *data);
@@ -140,5 +140,8 @@ float				ft_get_min_t(float a, float b, float c);
 void				ft_change_objects_directions(t_object *objs);
 
 int					ft_ray_to_light(t_rtv1 *rtv1, t_object *obj);
+
+t_camera			*ft_camera_constructor(t_vector3d location, t_vector3d rotation);
+t_vector3d			ft_value_clamper(t_vector3d v, int max_value);
 
 #endif

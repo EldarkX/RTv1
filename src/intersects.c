@@ -27,7 +27,7 @@ int 	ft_intersect_plane(const void *data, const t_vector3d camera_pos,
 	double		dot_dirs;
 
 	obj = (t_object *)data;
-	plane = (t_plane *)plane;
+	plane = (t_plane *)obj->data;
 	dot_dirs = ft_dot(direction, obj->direction);
 	if (dot_dirs == 0)
 		return (0);

@@ -12,13 +12,14 @@ int 	ft_color_to_int(t_color color)
 
 int		ft_ray_to_light(t_rtv1 *rtv1, t_object *obj)
 {
-	/*t_vector3d 	point_to_light;
-	float 		obj_intensity;
+	t_vector3d 	point_to_light;
+	//float 		obj_intensity;
 	float 		x;
 
-	/*point_to_light = ft_dif(rtv1->light_sources->location, obj->intersect_point);
-	x = ft_dot(point_to_light, obj->normal);*/
+	point_to_light = ft_dif(rtv1->light_sources->location, obj->intersect_point);
+	x = ft_dot(point_to_light, obj->normal);
 	t_color new = obj->color;
+	new.rgb.x = x;
 	/*if (x <= 0)
 	{
 		new.r = 255 * rtv1->environment_light;
