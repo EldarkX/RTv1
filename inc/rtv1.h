@@ -7,6 +7,7 @@
 # include <pthread.h>
 # include <fcntl.h>
 
+# include "../libft/includes/libft.h"
 # include "vector3d.h"
 
 # define WIDTH 		800

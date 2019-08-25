@@ -21,7 +21,7 @@
 # include <locale.h>
 # include <wchar.h>
 
-# define BUFF_SIZE 1
+# define BUFF_SIZE 100
 
 typedef struct		s_format
 {
