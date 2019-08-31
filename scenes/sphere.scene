@@ -1,5 +1,29 @@
 camera:
 {
-	location: 0, 0, -15
-	rotation: 0, 0, 0
+	location: 0 20 -15
+	rotation: 1 2 3
+}
+sphere:
+{
+	location: 0 0 -25
+	rotation: 0 2 1
+	color: 255 0 0
+}
+plane:
+{
+	location: 0 0 -25
+	rotation: 0 0 0
+	color: 255 15 11
+}
+cylinder:
+{
+	location: 0 0 -25
+	rotation: 0 0 0
+	color: 0 255 0
+}
+cone:
+{
+	location: 0 0 -25
+	rotation: 0 0 0
+	color: 0 0 255
 }

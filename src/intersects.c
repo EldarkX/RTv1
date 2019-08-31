@@ -5,7 +5,7 @@ int ft_intersect_sphere(const void *data, const t_vector3d camera_pos,
 {
 	t_object *obj;
 	t_sphere *sphere;
-	double a[2];
+	double a[3];
 
 	obj = (t_object *)data;
 	sphere = (t_sphere *)obj->data;
@@ -45,7 +45,7 @@ int 	ft_intersect_cylinder(const void *data, const t_vector3d camera_pos,
 {
 	t_object *obj;
 	t_cylinder *cylinder;
-	double a[2];
+	double a[3];
 	float dot_dirs;
 	float dot_cam_dirs;
 
@@ -71,7 +71,7 @@ int 	ft_intersect_cone(const void *data, const t_vector3d camera_pos,
 {
 	t_object *obj;
 	t_cone *cone;
-	double a[2];
+	double a[3];
 	float dot_dirs;
 	float dot_cam_dirs;
 

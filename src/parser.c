@@ -14,151 +14,112 @@ void	ft_parse(int fd, t_rtv1 *rtv1)
 			while (line[i] != ':')
 				i++;
 			if (i <= 0 || i > 10 || (line[i + 1] && line[i + 1] != '\0'))
+			{
+				ft_strdel(&line);
 				ft_exit(rtv1, 1, "Parse error: bad line");
+			}
 			title = (char *)malloc(sizeof(char) * (i + 1));
 			title[i] = '\0';
 			while (--i >= 0)
 				title[i] = line[i];
 			ft_strdel(&line);
-			if (!ft_strcmp(title, "camera"))
+			if (!ft_strcmp(title, "camera") || 
+				!ft_strcmp(title, "light") || 
+				!ft_strcmp(title, "sphere") || 
+				!ft_strcmp(title, "plane") || 
+				!ft_strcmp(title, "cylinder") || 
+				!ft_strcmp(title, "cone"))
 			{
+				ft_printf("figure is %s\n", title);
+				if (!ft_parse_data(fd, rtv1, title))
+				{
+					ft_strdel(&title);
+					ft_exit(rtv1, 1, "Parse error: bad line");
+				}
 				ft_strdel(&title);
-				ft_parse_camera_data(fd, rtv1);
 			}
-			/*else if (!ft_strcmp(title, "light"))
-			{
-				ft_strdel(&title);
-				ft_parse_light_data(fd, rtv1)
-			}
-			else if (!ft_strcmp(title, "sphere"))
-			{
-				ft_strdel(&title);
-				ft_parse_sphere_data(fd, rtv1)
-			}
-			else if (!ft_strcmp(title, "plane"))
-			{
-				ft_strdel(&title);
-				ft_parse_plane_data(fd, rtv1)
-			}	
-			else if (!ft_strcmp(title, "cylinder"))
-			{
-				ft_strdel(&title);
-				ft_parse_cylinder_data(fd, rtv1)
-			}	
-			else if (!ft_strcmp(title, "cone"))
-			{
-				ft_strdel(&title);
-				ft_parse_cone_data(fd, rtv1)
-			}*/
 			else
+			{
+				ft_strdel(&title);
 				ft_exit(rtv1, 1, "Parse error: bad line");		
+			}
 		}
 		else
+		{
+			ft_strdel(&line);
 			ft_exit(rtv1, 1, "Parse error: bad line");
+		}
 	}
 }
 
-void		ft_skip_breckets(int fd, t_rtv1 *rtv1, int is_open)
+static int		ft_skip_breckets(int fd, int is_open)
 {
-	char *line;
+	char	*line;
+	int		result;
 
+	result = 1;
 	if (get_next_line(fd, &line) > 0)
 	{
 		if (ft_strcmp(line, is_open == 1 ? "{" : "}"))
-			ft_exit(rtv1, 1, "Parse error: bad line");
+			result = 0;
+		ft_strdel(&line);
 	}
 	else
-		ft_exit(rtv1, 1, "Parse error: bad line");
+		result = 0;
+	return (result);
 }
 
-t_vector3d	ft_parse_get_vector_param2(t_rtv1 *rtv1, char *line)
+void	ft_choose_constructor(t_rtv1 *rtv1, char *title, t_vector3d *v_params,
+	float *float_params)
 {
-	t_vector3d	param;
-	int			i;
-	int			j;
-	int			number_indexes[3];
-
-	i = 0;
-	while (line[i] != ':')
-		i++;
-	i++;
-	if (line[i++] != ' ')
-		ft_exit(rtv1, 1, "Parse error: bad line");
-	j = -1;
-	if (ft_isdigit(line[i]) || (line[i] == '-' && line[i + 1] && ft_isdigit(line[i + 1])))
-		number_indexes[++j] = i;
+	if (!ft_strcmp(title, "camera"))
+		rtv1->camera = ft_new_camera(v_params[0], v_params[1]);
+	else if (!ft_strcmp(title, "sphere"))
+		rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(v_params[0],
+			v_params[1], float_params[0], v_params[2]));
+	else if (!ft_strcmp(title, "plane"))
+		rtv1->objects = ft_add_obj(rtv1, ft_new_plane(v_params[0],
+			v_params[1], v_params[2]));
+	else if (!ft_strcmp(title, "cylinder"))
+		rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(v_params[0],
+			v_params[1], float_params[0], v_params[2]));		
+	else if (!ft_strcmp(title, "cone"))
+		rtv1->objects = ft_add_obj(rtv1, ft_new_cone(v_params[0],
+			v_params[1], float_params[0], v_params[2]));		
 	else
-		ft_exit(rtv1, 1, "Parse error: bad line");
-	if (line[i] == '-')
-		i++;
-	while (ft_isdigit(line[i]) && j < 3)
+		rtv1->light_sources = ft_add_light(rtv1, ft_new_light(v_params[0],
+			v_params[1], float_params[0], (int)float_params[1]));			
+}
+
+int	ft_parse_data(int fd, t_rtv1 *rtv1, char *title)
+{
+	t_vector3d		vector_params[3];
+	float			float_params[2];
+
+	if (!ft_skip_breckets(fd, 1))
+		return (0);
+	if (!ft_parse_get_vector_param(fd, &vector_params[0], "\tlocation"))
+		return (0);
+	if (!ft_parse_get_vector_param(fd, &vector_params[1], "\trotation"))
+		return (0);
+	if (!ft_strcmp(title, "sphere") || !ft_strcmp(title, "plane") || 
+		!ft_strcmp(title, "cylinder") || !ft_strcmp(title, "cone"))
 	{
-		if (line[i + 1] && line[i + 2] && line[i + 1] == ',' && line[i + 2] == ' ')
-		{
-			i += 3;
-			if (ft_isdigit(line[i]) || (line[i] == '-' && line[i + 1] && ft_isdigit(line[i + 1])))
-				number_indexes[++j] = i;
-			else
-				ft_exit(rtv1, 1, "Parse error: bad line");
-			if (line[i] == '-')
-				i++;
-		}
+		if (!ft_parse_get_vector_param(fd, &vector_params[2], "\tcolor"))
+			return (0);
+		/*if (!ft_strcmp(title, "cone"))
+			float_params[0] = ft_parse_get_scalar_param(fd, rtv1, "\tangle");
 		else
-			i++;
+			float_params[0] = ft_parse_get_scalar_param(fd, rtv1, "\tradius");*/
+		float_params[0] = 3;
 	}
-	if (j != 2 || line[i] != '\0')
-		ft_exit(rtv1, 1, "Parse error: bad line");
-	param.x = ft_atoi(line + number_indexes[0]);
-	param.y = ft_atoi(line + number_indexes[1]);
-	param.z = ft_atoi(line + number_indexes[2]);
-	ft_strdel(&line);
-	return (param);
-}
-
-t_vector3d	ft_parse_get_vector_param(int fd, t_rtv1 *rtv1, char *param_name)
-{
-	char		*line;
-	char		*param_line;
-	int			i;
-
-	if (get_next_line(fd, &line) > 0)
+	else if (!ft_strcmp(title, "light"))
 	{
-		i = 0;
-		if (!ft_strchr(line, ':'))
-			ft_exit(rtv1, 1, "Parse error: bad line");
-		if (line[i++] != '\t')
-			ft_exit(rtv1, 1, "Parse error: bad line");
-		while (line[i] != ':')
-			i++;
-		param_line = (char *)malloc(sizeof(char) * (i + 1));
-		param_line[i] = '\0';
-		while (--i >= 0)
-			param_line[i] = line[i];
-		if (ft_strcmp(param_line, param_name))
-			ft_exit(rtv1, 1, "Parse error: bad line");
+		//float_params[0] = ft_parse_get_scalar_param(fd, rtv1, "\tintensity");
+		/*float_params[1] =  light type */
 	}
-	else
-		ft_exit(rtv1, 1, "Parse error: bad line");
-	return (ft_parse_get_vector_param2(rtv1, line));
-}
-
-/*float	ft_parse_get_scalar_param(int fd, t_rtv1 *rtv1, char *param_name)
-{
-	return (0);
-}*/
-
-void	ft_parse_camera_data(int fd, t_rtv1 *rtv1)
-{
-	t_vector3d	location;
-	t_vector3d	rotation;
-
-	ft_skip_breckets(fd, rtv1, 1);
-	location = ft_parse_get_vector_param(fd, rtv1, "\tlocation");
-	rotation = ft_parse_get_vector_param(fd, rtv1, "\trotation");
-	ft_skip_breckets(fd, rtv1, 0);
-	rtv1->camera = ft_camera_constructor(location, rotation);
-	ft_printf("camera location = %f %f %f \n", rtv1->camera->location.x,
-		rtv1->camera->location.y, rtv1->camera->location.z);
-	ft_printf("camera rotation = %f %f %f \n", rtv1->camera->rotation.x,
-		rtv1->camera->rotation.y, rtv1->camera->rotation.z);
+	if (!ft_skip_breckets(fd, 0))
+		return (0);
+	ft_choose_constructor(rtv1, title, vector_params, float_params);
+	return (1);
 }

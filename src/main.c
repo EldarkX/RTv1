@@ -14,7 +14,7 @@ t_object    *ft_add_obj(t_rtv1 *rtv1, t_object *new_obj)
     return (head);
 }
 
-t_light    *ft_add_light_source(t_rtv1 *rtv1, t_light *new_light)
+t_light    *ft_add_light(t_rtv1 *rtv1, t_light *new_light)
 {
     t_light *head;
 
@@ -33,9 +33,31 @@ void ft_print_objects(t_object *start)
 
     while (tmp)
     {
-        printf("1 check color = %f %f %f \n", tmp->color.rgb.x, tmp->color.rgb.y, tmp->color.rgb.z);
-        printf("2 check location = %f %f %f \n", tmp->location.x, tmp->location.y, tmp->location.z);
+        ft_print_vector(tmp->location, "location");
+        ft_print_vector(tmp->rotation, "rotation");
+        ft_print_vector(tmp->color.rgb, "color");
         tmp = tmp->next;
+    }
+}
+
+void ft_print_lights(t_light *start)
+{
+    t_light *tmp = start;
+
+    while (tmp)
+    {
+        ft_print_vector(tmp->location, "location");
+        ft_print_vector(tmp->rotation, "rotation");
+        tmp = tmp->next;
+    }
+}
+
+void ft_print_camera(t_camera *camera)
+{
+    if (camera)
+    {
+        ft_print_vector(camera->location, "location");
+        ft_print_vector(camera->rotation, "rotation");
     }
 }
 
@@ -54,45 +76,11 @@ int main(int argc, char **argv)
     rtv1->light_sources = NULL;
     rtv1->camera = NULL;
     ft_parse(fd, rtv1);
-    close(fd);
-/* temporary*/
-    /*t_color color;
-    color.rgb = 100;
-    color.g = 70;
-    color.b = 70;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_cone(ft_new_vector(0, 0, 5), ft_new_vector(0, 0, 0), 30, color));
-    color.r = 200;
-    color.g = 100;
-    color.b = 200;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(ft_new_vector(-8, 0, 1), ft_new_vector(0, 0, 0), 1, color)); 
-    color.r = 200;
-    color.g = 100;
-    color.b = 200;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(ft_new_vector(8, 0, 1), ft_new_vector(0, 0, 0), 1, color)); 
-    color.r = 150;
-    color.g = 150;
-    color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, -3, 0), ft_new_vector(0, 0, 0), color));
-    color.r = 255;
-    color.g = 30;
-    color.b = 150;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, 7, 0), ft_new_vector(0, 0, 0), color));
-    color.r = 0;
-    color.g = 70;
-    color.b = 70;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_plane(ft_new_vector(0, -1, 8), ft_new_vector(90, 0, 0), color));
-    color.r = 255;
-    color.g = 0;
-    color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(0, -1, -2), ft_new_vector(0, 0, 0), 2, color));
-    color.r = 0;
-    color.g = 255;
-    color.b = 0;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(-3, -1, 0), ft_new_vector(0, 0, 0), 2, color));
-    color.r = 0;
-    color.g = 0;
-    color.b = 255;
-    rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(ft_new_vector(3, -1, 0), ft_new_vector(0, 0, 0), 2, color));*/
+    if (close(fd) == -1)
+        ft_exit(rtv1, 1, "Can`t close file.");
+    ft_print_camera(rtv1->camera);
+    ft_print_objects(rtv1->objects);
+    ft_print_lights(rtv1->light_sources);
     rtv1->light_sources = (t_light *)malloc(sizeof(t_light));
     rtv1->light_sources->location = ft_new_vector(0, 3, -5);
     rtv1->light_sources->intensity = 0.9;

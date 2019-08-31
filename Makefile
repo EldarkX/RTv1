@@ -19,7 +19,8 @@ SRC_NAMES2 = $(SRC_NAMES:ft_printf/%=%)
 OBJ = $(addprefix $(LIBFT_OBJ_DIR), $(SRC_NAMES2:.c=.o))
 
 RTV1_SRC = src/main.c src/vector3d.c src/constructors_objects.c src/draw.c src/controller.c src/intersects.c \
-	src/ray_tracing_proccess.c src/lighting.c src/normal.c src/parser.c src/constructors_scene.c
+	src/ray_tracing_proccess.c src/lighting.c src/normal.c src/parser.c src/constructors_scene.c \
+	src/parser_helper.c
 RTV1_SRC_NAMES = $(RTV1_SRC:src/%=%)
 RTV1_OBJ = $(addprefix $(OBJ_DIR), $(RTV1_SRC_NAMES:.c=.o))
 
