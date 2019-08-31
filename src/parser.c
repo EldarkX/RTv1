@@ -70,25 +70,25 @@ static int		ft_skip_breckets(int fd, int is_open)
 }
 
 void	ft_choose_constructor(t_rtv1 *rtv1, char *title, t_vector3d *v_params,
-	float *float_params)
+	float *f_params)
 {
 	if (!ft_strcmp(title, "camera"))
 		rtv1->camera = ft_new_camera(v_params[0], v_params[1]);
 	else if (!ft_strcmp(title, "sphere"))
 		rtv1->objects = ft_add_obj(rtv1, ft_new_sphere(v_params[0],
-			v_params[1], float_params[0], v_params[2]));
+			v_params[1], f_params[0], v_params[2]));
 	else if (!ft_strcmp(title, "plane"))
 		rtv1->objects = ft_add_obj(rtv1, ft_new_plane(v_params[0],
 			v_params[1], v_params[2]));
 	else if (!ft_strcmp(title, "cylinder"))
 		rtv1->objects = ft_add_obj(rtv1, ft_new_cylinder(v_params[0],
-			v_params[1], float_params[0], v_params[2]));		
+			v_params[1], f_params[0], v_params[2]));		
 	else if (!ft_strcmp(title, "cone"))
 		rtv1->objects = ft_add_obj(rtv1, ft_new_cone(v_params[0],
-			v_params[1], float_params[0], v_params[2]));		
+			v_params[1], f_params[0], v_params[2]));		
 	else
 		rtv1->light_sources = ft_add_light(rtv1, ft_new_light(v_params[0],
-			v_params[1], float_params[0], (int)float_params[1]));			
+			v_params[1], f_params[0], (int)f_params[1]));			
 }
 
 int	ft_parse_data(int fd, t_rtv1 *rtv1, char *title)
@@ -100,22 +100,43 @@ int	ft_parse_data(int fd, t_rtv1 *rtv1, char *title)
 		return (0);
 	if (!ft_parse_get_vector_param(fd, &vector_params[0], "\tlocation"))
 		return (0);
+
+	ft_print_vector(vector_params[0], "location");
+
 	if (!ft_parse_get_vector_param(fd, &vector_params[1], "\trotation"))
 		return (0);
-	if (!ft_strcmp(title, "sphere") || !ft_strcmp(title, "plane") || 
+
+	ft_print_vector(vector_params[1], "rotation");
+
+	if (!ft_strcmp(title, "sphere") || !ft_strcmp(title, "plane") ||
 		!ft_strcmp(title, "cylinder") || !ft_strcmp(title, "cone"))
 	{
 		if (!ft_parse_get_vector_param(fd, &vector_params[2], "\tcolor"))
 			return (0);
-		/*if (!ft_strcmp(title, "cone"))
-			float_params[0] = ft_parse_get_scalar_param(fd, rtv1, "\tangle");
-		else
-			float_params[0] = ft_parse_get_scalar_param(fd, rtv1, "\tradius");*/
-		float_params[0] = 3;
+
+		ft_print_vector(vector_params[2], "color");
+
+		if (!ft_strcmp(title, "cone"))
+		{
+			if (!ft_parse_get_scalar_param(fd, &float_params[0], "\tangle", -1))
+				return (0);
+
+			printf("angle = %f\n", float_params[0]);
+
+		}
+		else if (!ft_strcmp(title, "sphere") || !ft_strcmp(title, "cylinder"))
+		{
+			if (!ft_parse_get_scalar_param(fd, &float_params[0], "\tradius", -1))
+				return (0);
+
+			printf("radius = %f\n", float_params[0]);
+			
+		}
 	}
 	else if (!ft_strcmp(title, "light"))
 	{
-		//float_params[0] = ft_parse_get_scalar_param(fd, rtv1, "\tintensity");
+		if (!ft_parse_get_scalar_param(fd, &float_params[0], "\tintensity", -1))
+			return (0);
 		/*float_params[1] =  light type */
 	}
 	if (!ft_skip_breckets(fd, 0))

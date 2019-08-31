@@ -11,7 +11,6 @@ t_vector3d ft_get_normal_sphere(const void *data)
 	return (normal);
 }
 
-/*TMP*/
 t_vector3d ft_get_normal_cylinder(const void *data)
 {
 	t_vector3d normal;
@@ -25,7 +24,6 @@ t_vector3d ft_get_normal_cylinder(const void *data)
 	return (normal);
 }
 
-/*TMP*/
 t_vector3d ft_get_normal_cone(const void *data)
 {
 	t_vector3d normal;

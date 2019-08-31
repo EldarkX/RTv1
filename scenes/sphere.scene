@@ -1,29 +1,39 @@
 camera:
 {
-	location: 0 20 -15
-	rotation: 1 2 3
+	location: 0 0 -15
+	rotation: 0 0 0
 }
 sphere:
 {
-	location: 0 0 -25
+	location: -3 0 0
 	rotation: 0 2 1
 	color: 255 0 0
+	radius: 1.1
+}
+sphere:
+{
+	location: -5 0 0
+	rotation: 0 2 1
+	color: 255 350 0
+	radius: 1.5
 }
 plane:
 {
-	location: 0 0 -25
+	location: 0 -5 0
 	rotation: 0 0 0
 	color: 255 15 11
 }
 cylinder:
 {
-	location: 0 0 -25
+	location: 5 0 0
 	rotation: 0 0 0
 	color: 0 255 0
+	radius: 1.79
 }
 cone:
 {
-	location: 0 0 -25
+	location: 0 0 5
 	rotation: 0 0 0
 	color: 0 0 255
+	angle: 20.212
 }

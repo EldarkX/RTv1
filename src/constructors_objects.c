@@ -6,7 +6,7 @@ t_object	*ft_new_sphere(t_vector3d location, t_vector3d rotation,
 	t_sphere *new_sphere = (t_sphere *)malloc(sizeof(t_sphere));
 	t_object *obj = (t_object *)malloc(sizeof(t_object));
 	
-	new_sphere->radius = radius <= 0 ? 1 : (int)radius % 100;
+	new_sphere->radius = radius;
 
 	obj->data = new_sphere;
 	obj->location = location;
@@ -25,7 +25,7 @@ t_object	*ft_new_cylinder(t_vector3d location, t_vector3d rotation,
 	t_cylinder *new_cylinder = (t_cylinder *)malloc(sizeof(t_cylinder)); 
 	t_object *obj = (t_object *)malloc(sizeof(t_object));
 
-	new_cylinder->radius = radius <= 0 ? 1 : (int)radius % 100;
+	new_cylinder->radius = radius;
 
 	obj->data = new_cylinder;
 	obj->location = location;
@@ -44,7 +44,7 @@ t_object	*ft_new_cone(t_vector3d location, t_vector3d rotation,
 	t_cone *new_cone = (t_cone *)malloc(sizeof(t_cone)); 
 	t_object *obj = (t_object *)malloc(sizeof(t_object));
 
-	new_cone->angle_degree = angle_degree == 0 ? 1 : (int)angle_degree % 150;
+	new_cone->angle_degree = angle_degree;
 	new_cone->angle_rad = DTR(angle_degree);
 
 	obj->data = new_cone;

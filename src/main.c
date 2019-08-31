@@ -61,6 +61,8 @@ void ft_print_camera(t_camera *camera)
     }
 }
 
+/*TO DO : CHECK ON VALUES IN PARSER BEFORE USING" */
+
 int main(int argc, char **argv)
 {
     t_rtv1  *rtv1;
@@ -78,9 +80,8 @@ int main(int argc, char **argv)
     ft_parse(fd, rtv1);
     if (close(fd) == -1)
         ft_exit(rtv1, 1, "Can`t close file.");
-    ft_print_camera(rtv1->camera);
-    ft_print_objects(rtv1->objects);
-    ft_print_lights(rtv1->light_sources);
+    if (rtv1->camera == NULL)
+        ft_exit(rtv1, 1, "There isn't a camera.");
     rtv1->light_sources = (t_light *)malloc(sizeof(t_light));
     rtv1->light_sources->location = ft_new_vector(0, 3, -5);
     rtv1->light_sources->intensity = 0.9;

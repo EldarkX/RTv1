@@ -136,6 +136,8 @@ void				ft_parse(int fd, t_rtv1 *rtv1);
 int					ft_parse_data(int fd, t_rtv1 *rtv1, char *title);
 int					ft_parse_get_vector_param(int fd, t_vector3d *param,
 						char *param_name);
+int					ft_parse_get_scalar_param(int fd, float *param,
+						char *param_name, int i);
 
 void				ft_draw_loop(t_rtv1 *rtv1);
 void				*ft_draw_calculation(void *data);
@@ -157,6 +159,7 @@ int					ft_ray_to_light(t_rtv1 *rtv1, t_object *obj);
 t_camera			*ft_new_camera(t_vector3d location, t_vector3d rotation);
 t_light				*ft_new_light(t_vector3d location, t_vector3d rotation,
 						float intensity, e_light_type type);
-t_vector3d			ft_value_clamper(t_vector3d v, int max_value, int is_positive);
+t_vector3d			ft_value_clamper(t_vector3d v, int max_value,
+						int is_positive);
 
 #endif

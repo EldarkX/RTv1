@@ -21,13 +21,13 @@ int		ft_ray_to_light(t_rtv1 *rtv1, t_object *obj)
 	t_color new = obj->color;
 	if (x <= 0)
 	{
-		new.rgb.x = 255 * 0.2;
-		new.rgb.y = 255 * 0.2;
-		new.rgb.z = 255 * 0.2;
+		new.rgb.x = 255 * 0.1;
+		new.rgb.y = 255 * 0.1;
+		new.rgb.z = 255 * 0.1;
 	}
 	else
 	{
-		obj_intensity = 0.2 + 0.8 * x / ft_length(point_to_light);
+		obj_intensity = 0.1 + 0.9 * x / ft_length(point_to_light);
 		new.rgb.x = (float)new.rgb.x * obj_intensity;
 		new.rgb.y = (float)new.rgb.y * obj_intensity;
 		new.rgb.z = (float)new.rgb.z * obj_intensity;
