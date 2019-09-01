@@ -40,7 +40,8 @@ t_light	*ft_new_light(t_vector3d location, t_vector3d rotation,
 	new_light = (t_light *)malloc(sizeof(t_light));
 	new_light->location = location;
 	new_light->rotation = ft_value_clamper(rotation, 360, 0);
-	new_light->intensity = intensity >= 0 ? 0.1 : intensity;
+	new_light->intensity = intensity;
 	new_light->type = type;
+	new_light->next = NULL;
 	return (new_light);
 }

@@ -82,10 +82,8 @@ int main(int argc, char **argv)
         ft_exit(rtv1, 1, "Can`t close file.");
     if (rtv1->camera == NULL)
         ft_exit(rtv1, 1, "There isn't a camera.");
-    rtv1->light_sources = (t_light *)malloc(sizeof(t_light));
-    rtv1->light_sources->location = ft_new_vector(0, 3, -5);
-    rtv1->light_sources->intensity = 0.9;
-    rtv1->light_sources->next = NULL;
+    rtv1->light_sources->type = AMBIENT;
+    rtv1->light_sources->next->type = DIFFUSE;
     ft_draw_loop(rtv1);
     ft_memory_clean(rtv1);
     return (0);

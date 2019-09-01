@@ -137,6 +137,8 @@ int	ft_parse_data(int fd, t_rtv1 *rtv1, char *title)
 	{
 		if (!ft_parse_get_scalar_param(fd, &float_params[0], "\tintensity", -1))
 			return (0);
+
+		printf("intensity = %f\n", float_params[0]);
 		/*float_params[1] =  light type */
 	}
 	if (!ft_skip_breckets(fd, 0))

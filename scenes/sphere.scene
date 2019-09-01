@@ -6,34 +6,52 @@ camera:
 sphere:
 {
 	location: -3 0 0
-	rotation: 0 2 1
+	rotation: 0 0 0
 	color: 255 0 0
 	radius: 1.1
 }
 sphere:
 {
-	location: -5 0 0
-	rotation: 0 2 1
-	color: 255 350 0
-	radius: 1.5
+	location: -7 0 0
+	rotation: 0 0 0
+	color: 255 200 0
+	radius: 1.2
+}
+sphere:
+{
+	location: 1 0 1
+	rotation: 0 0 0
+	color: 0 0 200
+	radius: 1.1
+}
+sphere:
+{
+	location: 7 0 0
+	rotation: 0 0 0
+	color: 100 80 200
+	radius: 1.2
 }
 plane:
 {
-	location: 0 -5 0
+	location: 0 -2 0
 	rotation: 0 0 0
-	color: 255 15 11
+	color: 255 145 255
 }
-cylinder:
+plane:
 {
-	location: 5 0 0
-	rotation: 0 0 0
-	color: 0 255 0
-	radius: 1.79
+	location: 0 0 1
+	rotation: 90 0 0
+	color: 0 200 11
 }
-cone:
+light:
 {
-	location: 0 0 5
+	location: 0 0 0
 	rotation: 0 0 0
-	color: 0 0 255
-	angle: 20.212
+	intensity: 0.1
+}
+light:
+{
+	location: 0 0 -1
+	rotation: 0 0 0
+	intensity: 0.9
 }
