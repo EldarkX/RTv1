@@ -26,7 +26,7 @@ int 	ft_ray_tracing_proccess(t_rtv1 *rtv1, t_vector3d dir)
 			nearest_obj->location),	nearest_obj->direction);
 		nearest_obj->normal = nearest_obj->ft_get_normal(nearest_obj);
 	}
-	return (nearest_obj ? ft_ray_to_light(rtv1, nearest_obj) : 2147483647);
+	return (nearest_obj ? ft_ray_to_light(rtv1, nearest_obj, dir) : 2147483647);
 }
 
 float	ft_get_min_t(float a, float b, float c)
@@ -41,7 +41,7 @@ float	ft_get_min_t(float a, float b, float c)
 		return (-1);
 	t1 = (-b + sqrt(discriminant)) / (2 * a);
 	t2 = (-b - sqrt(discriminant)) / (2 * a);
-	if (t1 < t2)
+	if (t1 <= t2)
 		return (t1);
 	else
 		return (t2);

@@ -15,8 +15,8 @@
 
 # define THREADS	4
 
-# define ABS(x)		(x) > 0 ? (x) : -(x)
-# define DROUND(d)	ABS(d) < 0.001 ? 0 : (d)
+# define ABS(x)		(x) >= 0 ? (x) : -(x)
+# define DROUND(d)	ABS(d) < 0.000001 ? 0 : (d)
 
 typedef struct  	s_color
 {
@@ -135,8 +135,10 @@ t_light    			*ft_add_light(t_rtv1 *rtv1, t_light *new_light);
 void				ft_parse(int fd, t_rtv1 *rtv1);
 int					ft_parse_data(int fd, t_rtv1 *rtv1, char *title);
 int					ft_parse_get_vector_param(int fd, t_vector3d *param,
-						char *param_name);
+						char *param_name, int i);
 int					ft_parse_get_scalar_param(int fd, float *param,
+						char *param_name, int i);
+int					ft_perse_get_light_type(int fd, float *param_value,
 						char *param_name, int i);
 
 void				ft_draw_loop(t_rtv1 *rtv1);
@@ -154,7 +156,7 @@ int					ft_color_to_int(t_color color);
 float				ft_get_min_t(float a, float b, float c);
 void				ft_change_objects_directions(t_object *objs);
 
-int					ft_ray_to_light(t_rtv1 *rtv1, t_object *obj);
+int					ft_ray_to_light(t_rtv1 *rtv1, t_object *obj, t_vector3d dir);
 
 t_camera			*ft_new_camera(t_vector3d location, t_vector3d rotation);
 t_light				*ft_new_light(t_vector3d location, t_vector3d rotation,

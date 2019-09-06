@@ -98,12 +98,12 @@ int	ft_parse_data(int fd, t_rtv1 *rtv1, char *title)
 
 	if (!ft_skip_breckets(fd, 1))
 		return (0);
-	if (!ft_parse_get_vector_param(fd, &vector_params[0], "\tlocation"))
+	if (!ft_parse_get_vector_param(fd, &vector_params[0], "\tlocation", -1))
 		return (0);
 
 	ft_print_vector(vector_params[0], "location");
 
-	if (!ft_parse_get_vector_param(fd, &vector_params[1], "\trotation"))
+	if (!ft_parse_get_vector_param(fd, &vector_params[1], "\trotation", -1))
 		return (0);
 
 	ft_print_vector(vector_params[1], "rotation");
@@ -111,7 +111,7 @@ int	ft_parse_data(int fd, t_rtv1 *rtv1, char *title)
 	if (!ft_strcmp(title, "sphere") || !ft_strcmp(title, "plane") ||
 		!ft_strcmp(title, "cylinder") || !ft_strcmp(title, "cone"))
 	{
-		if (!ft_parse_get_vector_param(fd, &vector_params[2], "\tcolor"))
+		if (!ft_parse_get_vector_param(fd, &vector_params[2], "\tcolor", -1))
 			return (0);
 
 		ft_print_vector(vector_params[2], "color");
@@ -139,7 +139,12 @@ int	ft_parse_data(int fd, t_rtv1 *rtv1, char *title)
 			return (0);
 
 		printf("intensity = %f\n", float_params[0]);
-		/*float_params[1] =  light type */
+		
+		if (!ft_perse_get_light_type(fd, &float_params[1], "\ttype", 0))
+				return (0);
+
+		printf("type = %f\n", float_params[1]);
+
 	}
 	if (!ft_skip_breckets(fd, 0))
 		return (0);
